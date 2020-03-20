@@ -1,6 +1,6 @@
 package pierre.core;
 //Notepad in java.
-//Jag hade kunnat gjort den mer avancerad, men tänker jobba med fysik vetenskapliga rapporten istället.
+//Jag hade kunnat gjort den mer avancerad om jag la ner mer tid.
 //2020-02-28
 //Pierre
 
@@ -19,35 +19,35 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Notepad extends javax.swing.JFrame {
-    static Frame frame;
-    static MenuBar menuBar;
-    static Menu fileMenu;
-    static Menu editMenu;
-    static Menu settingsMenu;
-    static Menu aboutMenu;
-    static MenuItem menuItemNewFile;
-    static MenuItem menuItemExit;
-    static MenuItem menuItemImportFile;
-    static MenuItem menuItemSaveAs;
-    static MenuItem menuItemSave;
-    static MenuItem menuItemClear;
-    static MenuItem menuItemChangeFont; //Import tff or just string and select type, size
-    static MenuItem menuItemAllowResizing;
-    static MenuItem menuItemAbout;
-    static MenuItem menuItemAutomaticRowChange;
-    static MenuItem menuItemCopy;
-    static MenuItem menuItemPaste;
+    static JFrame frame;
+    static JMenuBar menuBar;
+    static JMenu fileMenu;
+    static JMenu editMenu;
+    static JMenu settingsMenu;
+    static JMenu aboutMenu;
+    static JMenuItem menuItemNewFile;
+    static JMenuItem menuItemExit;
+    static JMenuItem menuItemImportFile;
+    static JMenuItem menuItemSaveAs;
+    static JMenuItem menuItemSave;
+    static JMenuItem menuItemClear;
+    static JMenuItem menuItemChangeFontSize;
+    static JCheckBoxMenuItem menuItemAllowResizing;
+    static JMenuItem menuItemAbout;
+    static JCheckBoxMenuItem menuItemAutomaticRowChange;
+    static JMenuItem menuItemCopy;
+    static JMenuItem menuItemPaste;
     private JPanel mainPanel;
     private static JTextArea txtEditText;
     private static String MessageBoxTitle = "Notepad GUI";
     private static String openedFile = null;
     private static Font mainFont;
-
+    static int fontSize = 12;
 
 
 
     public static void main(String[] args) {
-        frame = new Frame("Notepad GUI - Pierre");
+        frame = new JFrame("Notepad GUI - Pierre");
         BufferedImage image = null;
         try {
             image = ImageIO.read(
@@ -65,18 +65,18 @@ public class Notepad extends javax.swing.JFrame {
         frame.setPreferredSize(res);
         txtEditText = new JTextArea();
         txtEditText.setEditable(true);
-        mainFont = new Font("Verdana", Font.BOLD, 12);
+        mainFont = new Font("Verdana", Font.BOLD, fontSize);
         txtEditText.setFont(mainFont);
         frame.setFont(mainFont);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.pack();
-        menuBar = new MenuBar();
-        fileMenu = new Menu("File");
-        editMenu = new Menu("Edit");
-        settingsMenu = new Menu("Settings");
-        aboutMenu = new Menu("About");
-        menuItemNewFile = new MenuItem("Create New File");
+        menuBar = new JMenuBar();
+        fileMenu = new JMenu("File");
+        editMenu = new JMenu("Edit");
+        settingsMenu = new JMenu("Settings");
+        aboutMenu = new JMenu("About");
+            menuItemNewFile = new JMenuItem("Create New File");
         menuItemNewFile.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -87,44 +87,61 @@ public class Notepad extends javax.swing.JFrame {
 
             }
         });
-        menuItemExit = new MenuItem("Exit application");
+        menuItemExit = new JMenuItem("Exit application");
         menuItemExit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 confirmExit();
             }
         });
-        menuItemImportFile = new MenuItem("Import file");
+        menuItemImportFile = new JMenuItem("Import file");
         menuItemImportFile.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 openFileDialog();
             }
         });
-        menuItemSaveAs = new MenuItem("Save as");
-        menuItemSave = new MenuItem("Save");
-        menuItemClear = new MenuItem("CLear");
-        menuItemChangeFont = new MenuItem("Change font");
-        menuItemAllowResizing = new CheckboxMenuItem("Allow resizing of window");
-        menuItemAutomaticRowChange = new CheckboxMenuItem();
-        menuItemAutomaticRowChange.addActionListener(new ActionListener() {
+        menuItemSaveAs = new JMenuItem("Save as");
+        menuItemSave = new JMenuItem("Save");
+        menuItemClear = new JMenuItem("Clear");
+        //menuItemChangeTextColor = new JMenuItem("Change Text Color");
+        menuItemChangeFontSize = new JMenuItem("Change Font Size");
+        menuItemChangeFontSize.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                txtEditText.setLineWrap(true);
+                fontSize = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter new font size ( current = " + fontSize + ")", MessageBoxTitle, JOptionPane.INFORMATION_MESSAGE));
+                mainFont = new Font("Verdana", Font.BOLD, fontSize);
+                txtEditText.setFont(mainFont);
+                frame.setFont(mainFont);
             }
         });
-        menuItemAbout = new MenuItem("Credits");
+        menuItemAllowResizing = new JCheckBoxMenuItem("Allow resizing of window");
+        menuItemAllowResizing.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (menuItemAllowResizing.isSelected()) {
+                    frame.setResizable(true);
+                } else {
+                    frame.setResizable(false);
+                }
+            }
+        });
+        menuItemAbout = new JMenuItem("Credits");
         menuItemAbout.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                 JOptionPane.showMessageDialog(null, "Development: Pierre Lundström", MessageBoxTitle, JOptionPane.INFORMATION_MESSAGE);
+                 JOptionPane.showMessageDialog(null, "Simple notepad in java.\nDevelopment: Pierre Lundström", MessageBoxTitle, JOptionPane.INFORMATION_MESSAGE);
             }
         });
-        menuItemAutomaticRowChange = new CheckboxMenuItem("Automatic Row Changing");
+        menuItemAutomaticRowChange = new JCheckBoxMenuItem("Automatic Row Changing");
         menuItemAutomaticRowChange.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
+                if (menuItemAutomaticRowChange.isSelected()) {
+                    txtEditText.setLineWrap(true);
+                } else {
+                    txtEditText.setLineWrap(false);
+                }
             }
         });
 
@@ -158,8 +175,9 @@ public class Notepad extends javax.swing.JFrame {
             }
         });
         settingsMenu.add(menuItemAllowResizing);
+        settingsMenu.add(menuItemAutomaticRowChange);
         aboutMenu.add(menuItemAbout);
-        editMenu.add(menuItemChangeFont);
+        editMenu.add(menuItemChangeFontSize);
         fileMenu.add(menuItemNewFile);
         fileMenu.add(menuItemImportFile);
         fileMenu.add(menuItemSave);
@@ -170,10 +188,9 @@ public class Notepad extends javax.swing.JFrame {
         menuBar.add(editMenu);
         menuBar.add(settingsMenu);
         menuBar.add(aboutMenu);
-        frame.setMenuBar(menuBar);
+        frame.setJMenuBar(menuBar);
         frame.add(txtEditText);
-        //frame.add(mainPanel);
-        frame.setMenuBar(menuBar);
+        frame.setJMenuBar(menuBar);
         frame.setVisible(true);
     }
 
