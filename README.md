@@ -9,7 +9,7 @@ Detta program är tänkt att ska fungera som en Notepad/anteckningsbok.
 Arbetets syfte och mål är att ha en fungerande notepad program med följande funktioner: Create New File, Import File, Save, Save As, Clear och Exit. Vet inte om alla de behövde vara med men jag la till dom. Detta program är tänkt att ska fungera som en Notepad/anteckningsbok.
 
 # 1.2 Arbetssätt och genomförande
-Jag har jobbat med swing väldigt mycket innan detta arbete så jag kunde det som vi gjort redan. Jag visste hur man skapar en ny fil, importar en fil med openfiledialog och sparar den osv. Jag började med att lägga till komponenterna jag ville ha: jframe, panel, jtextarea som man kan skriva i, jmenu, jmenubar, jmenuitem osv. Sedan la jag till de menu items som jag ville ha i ordning. Jag skrev kommentarer i koden efteråt som förklarar vad varje sak betyder också.
+Jag har jobbat med swing väldigt mycket innan detta arbete så jag kunde det som vi gjort redan. Jag visste hur man skapar en ny fil, importar en fil med openfiledialog och sparar den osv. Jag började med att lägga till komponenterna jag ville ha: jframe, panel, jtextarea som man kan skriva i, jmenu, jmenubar, jmenuitem osv. Sedan la jag till de menu items som jag ville ha i ordning. Jag tänkte skriva kommentarer i koden efteråt som förklarar vad varje sak betyder också men blev inte så men jag gör kanske det senare.
 
 # 1.3 Bakgrund
 Jag har använt en dator med IntelliJ och mitt huvud. Jag började med att lägga till komponenterna jag ville ha: jframe, panel, jtextarea, menu, menubar, menuitem osv. Sedan la jag till de menu items som jag ville ha i ordning.
